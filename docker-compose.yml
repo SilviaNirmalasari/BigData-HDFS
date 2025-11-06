@@ -1,52 +1,4 @@
-version: '3.8'
-
 services:
-  # ========== HDFS ==========
-  namenode:
-    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
-    container_name: namenode
-    restart: always
-    ports:
-      - "9870:9870"
-      - "9000:9000"
-    volumes:
-      - ./data/hdfs/namenode:/hadoop/dfs/name
-    environment:
-      - CLUSTER_NAME=bigdata-praktikum
-      - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
-      - CORE_CONF_hadoop_http_staticuser_user_name=root
-      - CORE_CONF_hadoop_proxyuser_hue_hosts=*
-      - CORE_CONF_hadoop_proxyuser_hue_groups=*
-      - HDFS_CONF_dfs_webhdfs_enabled=true
-      - HDFS_CONF_dfs_permissions_enabled=false
-    networks:
-      - bigdata-network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9870"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-
-  datanode:
-    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
-    container_name: datanode
-    restart: always
-    ports:
-      - "9864:9864"
-    volumes:
-      - ./data/hdfs/datanode:/hadoop/dfs/data
-    environment:
-      - SERVICE_PRECONDITION=namenode:9870
-      - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
-      - CORE_CONF_hadoop_http_staticuser_user_name=root
-      - CORE_CONF_hadoop_proxyuser_hue_hosts=*
-      - CORE_CONF_hadoop_proxyuser_hue_groups=*
-    networks:
-      - bigdata-network
-    depends_on:
-      - namenode
-
-  # ========== MONGODB ==========
   mongodb:
     image: mongo:6.0
     container_name: mongodb
@@ -55,47 +7,27 @@ services:
       - "27017:27017"
     volumes:
       - ./data/mongodb:/data/db
-      - ./data/mongodb/configdb:/data/configdb
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin123
     networks:
-      - bigdata-network
-    healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      - bdnet
 
-  # ========== CASSANDRA ==========
   cassandra:
-    image: cassandra:4.1
+    image: cassandra:3.11
     container_name: cassandra
     restart: always
     ports:
       - "9042:9042"
-      - "7199:7199"
     volumes:
       - ./data/cassandra:/var/lib/cassandra
     environment:
-      - CASSANDRA_CLUSTER_NAME=bigdata-cluster
-      - CASSANDRA_DC=dc1
-      - CASSANDRA_RACK=rack1
-      - CASSANDRA_SEEDS=cassandra
+      CASSANDRA_CLUSTER_NAME: TestCluster
+      CASSANDRA_DC: dc1
+      CASSANDRA_RACK: rack1
     networks:
-      - bigdata-network
-    healthcheck:
-      test: ["CMD", "cqlsh", "-e", "describe cluster"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+      - bdnet
 
 networks:
-  bigdata-network:
+  bdnet:
     driver: bridge
-
-volumes:
-  namenode_data:
-  datanode_data:
-  mongodb_data:
-  cassandra_data:

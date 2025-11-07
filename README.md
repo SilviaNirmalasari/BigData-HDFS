@@ -1,4 +1,4 @@
-# BigData-HDFS
+
 # BigData - HDFS + MongoDB + Cassandra
 
 Proyek praktikum Big Data dengan implementasi Hadoop HDFS, MongoDB, dan Apache Cassandra untuk manajemen data terdistribusi.

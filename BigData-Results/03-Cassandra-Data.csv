@@ -1,0 +1,13 @@
+Cassandra Employees Data
+=========================
+
+
+ id | dept    | name  | salary
+----+---------+-------+---------
+  4 |      IT |  Doni | 5200000
+  3 | Finance | Citra | 4800000
+  5 |      HR |   Eka | 4700000
+  2 |      HR |  Budi | 4500000
+  1 |      IT |  Andi | 5000000
+
+(5 rows)

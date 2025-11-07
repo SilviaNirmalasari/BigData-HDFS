@@ -1,0 +1,5 @@
+HDFS Directory Listing
+======================
+
+Found 1 items
+-rw-r--r--   1 gusytxpower supergroup          0 2025-11-07 08:17 /praktikum/data.csv

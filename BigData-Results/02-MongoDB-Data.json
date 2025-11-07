@@ -1,0 +1,8 @@
+MongoDB Employees Data
+=======================
+
+{"_id":"690d4af3138a5b179ace5f47","id":1,"name":"Andi","dept":"IT","salary":5000000}
+{"_id":"690d4af3138a5b179ace5f48","id":2,"name":"Budi","dept":"HR","salary":4500000}
+{"_id":"690d4af3138a5b179ace5f49","id":3,"name":"Citra","dept":"Finance","salary":4800000}
+{"_id":"690d4af3138a5b179ace5f4a","id":4,"name":"Doni","dept":"IT","salary":5200000}
+{"_id":"690d4af3138a5b179ace5f4b","id":5,"name":"Eka","dept":"HR","salary":4700000}

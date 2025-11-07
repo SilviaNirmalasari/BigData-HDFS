@@ -3,30 +3,23 @@ services:
     image: mongo:6.0
     container_name: mongodb
     restart: always
-    ports:
-      - "27017:27017"
-    volumes:
-      - ./data/mongodb:/data/db
+    ports: ["27017:27017"]
+    volumes: ["./data/mongodb:/data/db"]
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin123
-    networks:
-      - bdnet
+    networks: [bdnet]
 
   cassandra:
     image: cassandra:3.11
     container_name: cassandra
     restart: always
-    ports:
-      - "9042:9042"
-    volumes:
-      - ./data/cassandra:/var/lib/cassandra
+    ports: ["9042:9042"]
+    volumes: ["./data/cassandra:/var/lib/cassandra"]
     environment:
       CASSANDRA_CLUSTER_NAME: TestCluster
       CASSANDRA_DC: dc1
-      CASSANDRA_RACK: rack1
-    networks:
-      - bdnet
+    networks: [bdnet]
 
 networks:
   bdnet:
